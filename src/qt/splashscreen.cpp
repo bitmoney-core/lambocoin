@@ -30,7 +30,8 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     int paddingTop              = 50;
     int titleVersionVSpace      = 17;
     int titleCopyrightVSpaceLambo = 40;
-    int titleCopyrightVSpaceBit = 54;
+    int titleCopyrightVSpaceDoge = 54;
+    int titleCopyrightVSpaceBit = 68;
 
     float fontFactor            = 1.0;
     float devicePixelRatio      = 1.0;
@@ -42,7 +43,8 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     QString titleText       = tr("Lambocoin Core");
     QString versionText     = QString("Version %1").arg(QString::fromStdString(FormatFullVersion()));
     QString copyrightTextBit   = QChar(0xA9)+QString(" 2009-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Bitcoin Core developers"));
-    QString copyrightTextLambo  = QChar(0xA9)+QString(" 2013-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Lambocoin Core developers"));
+    QString copyrightTextDoge  = QChar(0xA9)+QString(" 2013-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Dogecoin Core developers"));
+    QString copyrightTextLambo  = QChar(0xA9)+QString(" 2018 ") + QString(tr("The Lambocoin Core developers"));
     QString titleAddText    = networkStyle->getTitleAddText();
 
     QString font            = "Calibri";
@@ -102,6 +104,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     // draw copyright stuff
     pixPaint.setFont(QFont(font, 10*fontFactor));
     pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop+titleCopyrightVSpaceLambo,copyrightTextLambo);
+    pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop+titleCopyrightVSpaceDoge,copyrightTextDoge);
     pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop+titleCopyrightVSpaceBit,copyrightTextBit);
 
     // draw additional text if special network

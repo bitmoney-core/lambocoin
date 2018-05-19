@@ -1,30 +1,25 @@
-# Lambocoin
-==========================
-
-![Lambocoin](/)
+# Lambocoin Core
 
 ## What is Lambocoin?
 Lambocoin is a cryptocurrency forked off of Dogecoin. It aims to build upon the foundation created by the popular meme coin, improving upon its surprisingly strong fundamentals to create a stronger, memeier coin for all.
 
-http://lambocoin.com/
-
 ## License
-Dogecoin is released under the terms of the MIT license. See [COPYING](COPYING)
+Lambocoin is released under the terms of the MIT license. See [COPYING](COPYING)
 for more information or see http://opensource.org/licenses/MIT.
 
 ## Development and contributions
 Any volunteers are free to contribute their own work on separate branches. Lambocoin is, and always will be, a completely open-source project built by the community.
 
-#### Branches
+## Branches
 There are 2 types of branches in this repository:
 
 - **master:** Stable, contains the latest version for the "average user"
 - **development:** Unstable, contains new code which may bring bugs and glitches. Not recommended for most users.
 
-### Lambocoin Supply
+## Lambocoin Supply
 There will be approximately 1,000,000,000 coins at launch (Summer 2018). Each subsequent block will grant a number of coins determined by how many blocks have previously been mined. This is to encourage miners to continue to secure the network and make up for lost wallets on hard drives/phones/lost encryption passwords/etc.
 
-### Block Rewards
+## Block Rewards
 Blocks 1–99,999: 0–10,000 Lambocoin 
 
 Blocks 100,000–144,999: 0–5,000 Lambocoin
@@ -39,14 +34,10 @@ Blocks 400,000–499,999: 300 Lambocoin
 
 Blocks 500,000+: 100 Lambocoin
 
-### Building lambocoin
+## Building lambocoin
 Documents will be added later to guide you through building lambocoin's executables.
 
-### Such ports
-RPC 22555
-P2P 22556
 
-![](http://dogesay.com/wow//////such/coin)
 
 Development tips and tricks
 ---------------------------

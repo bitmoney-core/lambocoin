@@ -1,2 +1,2 @@
 src/clientversion.cpp export-subst
-test_dogecoin-qt filter=lfs diff=lfs merge=lfs -text
+test_lambocoin-qt filter=lfs diff=lfs merge=lfs -text
