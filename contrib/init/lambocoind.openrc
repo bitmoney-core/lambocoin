@@ -1,0 +1,88 @@
+#!/sbin/runscript
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/lambocoin/.lambocoin" ]; then
+	LAMBOCOIND_DEFAULT_DATADIR="/var/lib/lambocoin/.lambocoin"
+else
+	LAMBOCOIND_DEFAULT_DATADIR="/var/lib/lambocoind"
+fi
+
+LAMBOCOIND_CONFIGFILE=${LAMBOCOIND_CONFIGFILE:-/etc/lambocoin/lambocoin.conf}
+LAMBOCOIND_PIDDIR=${LAMBOCOIND_PIDDIR:-/var/run/lambocoind}
+LAMBOCOIND_PIDFILE=${LAMBOCOIND_PIDFILE:-${LAMBOCOIND_PIDDIR}/lambocoind.pid}
+LAMBOCOIND_DATADIR=${LAMBOCOIND_DATADIR:-${LAMBOCOIND_DEFAULT_DATADIR}}
+LAMBOCOIND_USER=${LAMBOCOIND_USER:-${lambocoin_USER:-lambocoin}}
+LAMBOCOIND_GROUP=${LAMBOCOIND_GROUP:-lambocoin}
+LAMBOCOIND_BIN=${LAMBOCOIND_BIN:-/usr/bin/lambocoind}
+LAMBOCOIND_NICE=${LAMBOCOIND_NICE:-${NICELEVEL:-0}}
+LAMBOCOIND_OPTS="${LAMBOCOIND_OPTS:-${lambocoin_OPTS}}"
+
+name="Lambocoin Core Daemon"
+description="lambocoin cryptocurrency P2P network daemon"
+
+command="/usr/bin/lambocoind"
+command_args="-pid=\"${LAMBOCOIND_PIDFILE}\" \
+		-conf=\"${LAMBOCOIND_CONFIGFILE}\" \
+		-datadir=\"${LAMBOCOIND_DATADIR}\" \
+		-daemon \
+		${LAMBOCOIND_OPTS}"
+
+required_files="${LAMBOCOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${LAMBOCOIND_USER} \
+			-N ${LAMBOCOIND_NICE} -w 2000"
+pidfile="${LAMBOCOIND_PIDFILE}"
+retry=60
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${LAMBOCOIND_USER}:${LAMBOCOIND_GROUP}" \
+	"${LAMBOCOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${LAMBOCOIND_USER}:${LAMBOCOIND_GROUP}" \
+	"${LAMBOCOIND_PIDDIR}"
+
+	checkpath -f \
+	-o ${LAMBOCOIND_USER}:${LAMBOCOIND_GROUP} \
+	-m 0660 \
+	${LAMBOCOIND_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${LAMBOCOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run lambocoind."
+		eerror "The setting must appear in ${LAMBOCOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following"
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is also recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"lambocoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

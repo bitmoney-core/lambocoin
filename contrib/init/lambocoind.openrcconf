@@ -1,0 +1,27 @@
+# /etc/conf.d/lambocoind: config file for /etc/init.d/lambocoind
+
+# Config file location
+#LAMBOCOIND_CONFIGFILE="/etc/lambocoin/lambocoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $LAMBOCOIND_USER)
+#LAMBOCOIND_PIDDIR="/var/run/lambocoind"
+
+# What filename to give the pidfile
+#LAMBOCOIND_PIDFILE="${LAMBOCOIND_PIDDIR}/lambocoind.pid"
+
+# Where to write lambocoind data (be mindful that the blockchain is large)
+#LAMBOCOIND_DATADIR="/var/lib/lambocoind"
+
+# User and group to own lambocoind process
+#LAMBOCOIND_USER="lambocoin"
+#LAMBOCOIND_GROUP="lambocoin"
+
+# Path to lambocoind executable
+#LAMBOCOIND_BIN="/usr/bin/lambocoind"
+
+# Nice value to run lambocoind under
+#LAMBOCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+LAMBOCOIND_OPTS="-disablewallet"
+

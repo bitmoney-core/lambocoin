@@ -1,0 +1,3 @@
+debian/manpages/lambocoind.1
+debian/manpages/lambocoin.conf.5
+debian/manpages/lambocoin-cli.1

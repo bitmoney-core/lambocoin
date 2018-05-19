@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Lambocoin
+Comment=Lambocoin P2P Cryptocurrency
+Exec=lambocoin-qt %u
+Terminal=false
+Type=Application
+Icon=lambocoin128
+MimeType=x-scheme-handler/lambocoin;
+Categories=Office;Finance;
+Name[en_CA]=lambocoin-qt.desktop
