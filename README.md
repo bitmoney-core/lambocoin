@@ -4,7 +4,7 @@
 Lambocoin is a cryptocurrency forked off of Dogecoin. It aims to build upon the foundation created by the popular meme coin, improving upon its surprisingly strong fundamentals to create a stronger, memeier coin for all.
 
 ## License
-Lambocoin is released under the terms of the MIT license. See [COPYING](COPYING)
+Lambocoin is released under the terms of the MIT license. See [LICENSE](LICENSE)
 for more information or see http://opensource.org/licenses/MIT.
 
 ## Development and contributions
