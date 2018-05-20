@@ -1,6 +1,5 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin Core developers
-// Copyright (c) 2015 The Dogecoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -42,8 +41,8 @@ public:
         consensus.nMajorityEnforceBlockUpgrade = 1500;
         consensus.nMajorityRejectBlockOutdated = 1900;
         consensus.nMajorityWindow = 2000;
-        consensus.powLimit = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20;
-        consensus.nPowTargetTimespan = 4 * 60 * 60; // pre-digishield: 4 hours
+        consensus.powLimit = uint256S("0x0000000000000000000000000000000000000000000000000000000100010001");
+        consensus.nPowTargetTimespan = 2 * 60 * 60; // pre-digishield: 2 hours
         consensus.nPowTargetSpacing = 60; // 1 minute
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowAllowDigishieldMinDifficultyBlocks = false;
@@ -54,7 +53,7 @@ public:
         consensus.fAllowAuxPow = false;
         consensus.nHeightEffective = 0;
         consensus.fDigishieldDifficultyCalculation = false;
-        consensus.nCoinbaseMaturity = 30;
+        consensus.nCoinbaseMaturity = 20;
 
         // Blocks 145000 - 371336 are Digishield without AuxPoW
         digishieldConsensus = consensus;
@@ -62,7 +61,7 @@ public:
         digishieldConsensus.fSimplifiedRewards = true;
         digishieldConsensus.fDigishieldDifficultyCalculation = true;
         digishieldConsensus.nPowTargetTimespan = 60; // post-digishield: 1 minute
-        digishieldConsensus.nCoinbaseMaturity = 240;
+        digishieldConsensus.nCoinbaseMaturity = 150;
 
         // Blocks 371337+ are AuxPoW
         auxpowConsensus = digishieldConsensus;
@@ -80,12 +79,12 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xc0;
-        pchMessageStart[1] = 0xc0;
-        pchMessageStart[2] = 0xc0;
-        pchMessageStart[3] = 0xc0;
-        vAlertPubKey = ParseHex("04d4da7a5dae4db797d9b0644d57a5cd50e05a70f36091cd62e2fc41c98ded06340be5a43a35e185690cd9cde5d72da8f6d065b499b06f51dcfba14aad859f443a");
-        nDefaultPort = 22556;
+        pchMessageStart[0] = 0xd2;
+        pchMessageStart[1] = 0xc3;
+        pchMessageStart[2] = 0xb7;
+        pchMessageStart[3] = 0xdc;
+        vAlertPubKey = ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f");
+        nDefaultPort = 7480;
         nMinerThreads = 0;
         nPruneAfterHeight = 100000;
 
@@ -100,39 +99,34 @@ public:
          *     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)
          *   vMerkleTree: 4a5e1e
          */
-        const char* pszTimestamp = "Nintondo";
+        const char* pszTimestamp = "Lambocoin to the moon";
         CMutableTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 486604799 << CScriptNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
         txNew.vout[0].nValue = 88 * COIN;
-        txNew.vout[0].scriptPubKey = CScript() << ParseHex("040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9") << OP_CHECKSIG;
+        txNew.vout[0].scriptPubKey = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
         genesis.vtx.push_back(txNew);
         genesis.hashPrevBlock.SetNull();
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion.SetGenesisVersion(1);
-        genesis.nTime    = 1386325540;
+        genesis.nTime    = 1526797000;
         genesis.nBits    = 0x1e0ffff0;
-        genesis.nNonce   = 99943;
+        genesis.nNonce   = 1043361;
 
         consensus.hashGenesisBlock = genesis.GetHash();
         digishieldConsensus.hashGenesisBlock = consensus.hashGenesisBlock;
         auxpowConsensus.hashGenesisBlock = consensus.hashGenesisBlock;
-        assert(consensus.hashGenesisBlock == uint256S("0x1a91e3dace36e2be3bf030a65679fe821aa1d6ef92e7c9902eb318182c355691"));
-        assert(genesis.hashMerkleRoot == uint256S("0x5b2a3f53f605d62c53e62932dac6925e3d74afa5a4b459745c36d42d0ed26a69"));
+        assert(consensus.hashGenesisBlock == uint256S("0xf96255b48eba9ba473eeff9fd00b430e305f6efd6b609e59af2b10d15d87558a")); 
+        assert(genesis.hashMerkleRoot == uint256S("0x818ad49c0795e85f2d201c9532a1d9fad4115ff9726a43d96fc96a9bb498c664"));
 
-        vSeeds.push_back(CDNSSeedData("dogecoin.com", "seed.dogecoin.com"));
-        vSeeds.push_back(CDNSSeedData("multidoge.org", "seed.multidoge.org"));
-        vSeeds.push_back(CDNSSeedData("multidoge.org", "seed2.multidoge.org"));
-        vSeeds.push_back(CDNSSeedData("doger.dogecoin.com", "seed.doger.dogecoin.com"));
-
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,30);  // 0x1e
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,48);  // 0x1e
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,22);  // 0x16
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,158); // 0x9e
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x02)(0xfa)(0xca)(0xfd).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x02)(0xfa)(0xc3)(0x98).convert_to_container<std::vector<unsigned char> >();
 
-        //TODO: fix this for dogecoin -- plddr
+        //TODO: fix this for lambocoin -- plddr
         //vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
         vFixedSeeds.clear();
 
@@ -143,28 +137,19 @@ public:
         fMineBlocksOnDemand = false;
         fTestnetToBeDeprecatedFieldRPC = false;
 
+	/*
         checkpointData = (Checkpoints::CCheckpointData) {
             boost::assign::map_list_of
 
-            (      0, uint256S("0x1a91e3dace36e2be3bf030a65679fe821aa1d6ef92e7c9902eb318182c355691"))
-            (  42279, uint256S("0x8444c3ef39a46222e87584ef956ad2c9ef401578bd8b51e8e4b9a86ec3134d3a"))
-            (  42400, uint256S("0x557bb7c17ed9e6d4a6f9361cfddf7c1fc0bdc394af7019167442b41f507252b4"))
-            ( 104679, uint256S("0x35eb87ae90d44b98898fec8c39577b76cb1eb08e1261cfc10706c8ce9a1d01cf"))
-            ( 128370, uint256S("0x3f9265c94cab7dc3bd6a2ad2fb26c8845cb41cff437e0a75ae006997b4974be6"))
-            ( 145000, uint256S("0xcc47cae70d7c5c92828d3214a266331dde59087d4a39071fa76ddfff9b7bde72"))
-            ( 250000, uint256S("0x0e4bcfe8d970979f7e30e2809ab51908d435677998cf759169407824d4f36460"))
-            ( 350000, uint256S("0x2bdcba23a47049e69c4fec4c425462e30f3d21d25223bde0ed36be4ea59a7075"))
-            ( 371337, uint256S("0x60323982f9c5ff1b5a954eac9dc1269352835f47c2c5222691d80f0d50dcf053"))
-            ( 450000, uint256S("0xd279277f8f846a224d776450aa04da3cf978991a182c6f3075db4c48b173bbd7"))
-            ( 550000, uint256S("0xea8ed5430b221549a6a26f104b424ffd782ff4c8409bbbc5eaf3d83932825691"))
-            ( 650000, uint256S("0x486fcebc9a7288676a7614e1b6fd085d5d71019aead17d354a8bc2c3fde516e9"))
-            ( 771275, uint256S("0x1b7d789ed82cbdc640952e7e7a54966c6488a32eaad54fc39dff83f310dbaaed")),
+            (      0, uint256S("0x00d22b65f6eaecc803ba790cfaee48cc515d040936e20e31dd56691ff9fe71df")),
 
-            1435666139, // * UNIX timestamp of last checkpoint block
-            19567197,   // * total number of transactions between genesis and last checkpoint
+            1526781979, // * UNIX timestamp of last checkpoint block
+            0,   // * total number of transactions between genesis and last checkpoint
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            13000.0     // * estimated number of transactions per day after checkpoint
-        };
+            100.0     // * estimated number of transactions per day after checkpoint
+        }; */
+
+	checkpointData = {};
     }
 };
 static CMainParams mainParams;
@@ -243,17 +228,13 @@ public:
         auxpowConsensus.hashGenesisBlock = consensus.hashGenesisBlock;
         assert(consensus.hashGenesisBlock == uint256S("0xbb0a78264637406b6360aad926284d544d7049f45189db5664f3c4d07350559e"));
 
-        vFixedSeeds.clear();
-        vSeeds.clear();
-        vSeeds.push_back(CDNSSeedData("jrn.me.uk", "testseed.jrn.me.uk"));
-
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,113); // 0x71
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196); // 0xc4
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,241); // 0xf1
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xcf).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
 
-        //TODO: fix this for dogecoin -- plddr
+        //TODO: fix this for lambocoin -- plddr
         //vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
         fRequireRPCPassword = true;
@@ -263,17 +244,16 @@ public:
         fMineBlocksOnDemand = false;
         fTestnetToBeDeprecatedFieldRPC = true;
 
+	/*
         checkpointData = (Checkpoints::CCheckpointData) {
             boost::assign::map_list_of
             ( 0, uint256S("0xbb0a78264637406b6360aad926284d544d7049f45189db5664f3c4d07350559e"))
-            ( 483173, uint256S("0xa804201ca0aceb7e937ef7a3c613a9b7589245b10cc095148c4ce4965b0b73b5"))
-            ( 591117, uint256S("0x5f6b93b2c28cedf32467d900369b8be6700f0649388a7dbfd3ebd4a01b1ffad8"))
-            ( 658924, uint256S("0xed6c8324d9a77195ee080f225a0fca6346495e08ded99bcda47a8eea5a8a620b"))
-            ( 703635, uint256S("0x839fa54617adcd582d53030a37455c14a87a806f6615aa8213f13e196230ff7f")),
-            1440601451, // * UNIX timestamp of last checkpoint block
-            1119061,    // * total number of transactions between genesis and last checkpoint
-            1000        // * estimated number of transactions per day after checkpoint
-        };
+            //1440601451, // * UNIX timestamp of last checkpoint block
+            //1119061,    // * total number of transactions between genesis and last checkpoint
+            //1000        // * estimated number of transactions per day after checkpoint
+        };*/
+
+	checkpointData = {};
 
     }
 };
@@ -343,13 +323,16 @@ public:
         fMineBlocksOnDemand = true;
         fTestnetToBeDeprecatedFieldRPC = false;
 
+	/*
         checkpointData = (Checkpoints::CCheckpointData){
             boost::assign::map_list_of
-            ( 0, uint256S("0x3d2160a3b5dc4a9d62e7e66a295f70313ac808440ef7400d6c0772171ce973a5")),
+            ( 0, uint256S("0")),
             0,
             0,
             0
-        };
+        };*/
+
+	checkpointData = {};
     }
 };
 static CRegTestParams regTestParams;

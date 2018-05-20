@@ -687,6 +687,15 @@ void BitcoinGUI::setNumBlocks(int count, const QDateTime& blockDate)
         case BLOCK_SOURCE_REINDEX:
             progressBarLabel->setText(tr("Reindexing blocks on disk..."));
             break;
+	case BLOCK_SOURCE_NO_CONNECTIONS:
+	    progressBarLabel->setText(tr("No connections established.."));
+	    break;
+	case BLOCK_SOURCE_NO_INDEX:
+	    progressBarLabel->setText(tr("Failed to reindex."));
+	    break;
+	case BLOCK_SOURCE_NO_IMPORT:
+	    progressBarLabel->setText(tr("Failed to import blocks."));
+	    break;
         case BLOCK_SOURCE_NONE:
             // Case: not Importing, not Reindexing and no network connection
             progressBarLabel->setText(tr("No block source available..."));

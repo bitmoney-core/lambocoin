@@ -76,7 +76,7 @@ const std::string CLIENT_NAME("Lambotoshi");
 #endif
 #endif
 
-const std::string CLIENT_BUILD(BUILD_DESC CLIENT_VERSION_SUFFIX);
+const std::string CLIENT_BUILD(BUILD_DESC);
 const std::string CLIENT_DATE(BUILD_DATE);
 
 static std::string FormatVersion(int nVersion)

@@ -28,7 +28,6 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     // set reference point, paddings
     int paddingRight            = 100;
     int paddingTop              = 50;
-    int titleVersionVSpace      = 17;
     int titleCopyrightVSpaceLambo = 40;
     int titleCopyrightVSpaceDoge = 54;
     int titleCopyrightVSpaceBit = 68;
@@ -41,7 +40,6 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
 
     // define text to place
     QString titleText       = tr("Lambocoin Core");
-    QString versionText     = QString("Version %1").arg(QString::fromStdString(FormatFullVersion()));
     QString copyrightTextBit   = QChar(0xA9)+QString(" 2009-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Bitcoin Core developers"));
     QString copyrightTextDoge  = QChar(0xA9)+QString(" 2013-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Dogecoin Core developers"));
     QString copyrightTextLambo  = QChar(0xA9)+QString(" 2018 ") + QString(tr("The Lambocoin Core developers"));
@@ -90,19 +88,8 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     titleTextWidth  = fm.width(titleText);
     pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop,titleText);
 
-    pixPaint.setFont(QFont(font, 15*fontFactor));
-
-    // if the version string is to long, reduce size
-    fm = pixPaint.fontMetrics();
-    int versionTextWidth  = fm.width(versionText);
-    if(versionTextWidth > titleTextWidth+paddingRight-10) {
-        pixPaint.setFont(QFont(font, 10*fontFactor));
-        titleVersionVSpace -= 5;
-    }
-    pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight+2,paddingTop+titleVersionVSpace,versionText);
-
     // draw copyright stuff
-    pixPaint.setFont(QFont(font, 10*fontFactor));
+    pixPaint.setFont(QFont(font, 15*fontFactor));
     pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop+titleCopyrightVSpaceLambo,copyrightTextLambo);
     pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop+titleCopyrightVSpaceDoge,copyrightTextDoge);
     pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop+titleCopyrightVSpaceBit,copyrightTextBit);

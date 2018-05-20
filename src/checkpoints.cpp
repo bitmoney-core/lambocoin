@@ -29,8 +29,9 @@ namespace Checkpoints {
         const MapCheckpoints& checkpoints = data.mapCheckpoints;
 
         MapCheckpoints::const_iterator i = checkpoints.find(nHeight);
-        if (i == checkpoints.end()) return true;
-        return hash == i->second;
+        //if (i == checkpoints.end()) return true;
+        //return hash == i->second;
+	return true;
     }
 
     //! Guess how far we are in the verification process at the given block index
@@ -65,16 +66,18 @@ namespace Checkpoints {
 
     int GetTotalBlocksEstimate(const CCheckpointData& data)
     {
-        const MapCheckpoints& checkpoints = data.mapCheckpoints;
+        //const MapCheckpoints& checkpoints = data.mapCheckpoints;
 
-        if (checkpoints.empty())
-            return 0;
+        //if (checkpoints.empty())
+            //return 0;
 
-        return checkpoints.rbegin()->first;
+        //return checkpoints.rbegin()->first;
+	return 0;
     }
 
     CBlockIndex* GetLastCheckpoint(const CCheckpointData& data)
     {
+	/*
         const MapCheckpoints& checkpoints = data.mapCheckpoints;
 
         BOOST_REVERSE_FOREACH(const MapCheckpoints::value_type& i, checkpoints)
@@ -84,6 +87,7 @@ namespace Checkpoints {
             if (t != mapBlockIndex.end())
                 return t->second;
         }
+	*/
         return NULL;
     }
 

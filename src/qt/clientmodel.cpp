@@ -158,6 +158,12 @@ enum BlockSource ClientModel::getBlockSource() const
         return BLOCK_SOURCE_DISK;
     else if (getNumConnections() > 0)
         return BLOCK_SOURCE_NETWORK;
+    else if (getNumConnections() == 0 && ((fReindex) || (fImporting)))
+	return BLOCK_SOURCE_NO_CONNECTIONS;
+    else if ((!fReindex) && ((fImporting) || getNumConnections() > 0))
+	return BLOCK_SOURCE_NO_INDEX;
+    else if ((!fImporting) && ((fReindex) || getNumConnections() > 0))
+	return BLOCK_SOURCE_NO_IMPORT;
 
     return BLOCK_SOURCE_NONE;
 }
